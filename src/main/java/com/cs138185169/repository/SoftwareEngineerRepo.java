@@ -1,5 +1,11 @@
 package com.cs138185169.repository;
 
-public class SoftwareEngineerRepo {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.cs138185169.entity.SoftwareEngineer;
+
+@Repository
+public interface SoftwareEngineerRepo extends JpaRepository<SoftwareEngineer, Integer> {
 
 }
