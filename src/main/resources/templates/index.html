@@ -38,9 +38,9 @@
     <!-- /Navbar -->
 
     <!-- Messages -->
-    <div th:if=${session.msg}>
-        <div class="alert alert-success" role="alert" th:text="${session.msg}" />
-        <th:block th:text="${#session.removeAttribute('msg')}" />
+    <div th:if=${session.successMsg}>
+        <div class="alert alert-success" role="alert" th:text="${session.successMsg}" />
+        <th:block th:text="${#session.removeAttribute('successMsg')}" />
     </div>
 
     <div th:if=${session.errorMsg}>
@@ -68,10 +68,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="t: ${department}">
-                    <td th:text="${department.did}" />
-                    <td th:text="${department.name}" />
-                    <td th:text="${department.description" />
+                <tr th:each="t: ${departments}">
+                    <td th:text="${departments.did}" />
+                    <td th:text="${departments.name}" />
+                    <td th:text="${departments.description" />
                     <td>
                         <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
                         <!-- TO BE CHANGED -->
@@ -97,10 +97,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="t: ${department}">
-                    <td th:text="${department.did}" />
-                    <td th:text="${department.name}" />
-                    <td th:text="${department.description" />
+                <tr th:each="t: ${projects}">
+                    <td th:text="${projects.did}" />
+                    <td th:text="${projects.name}" />
+                    <td th:text="${projects.description" />
                     <td>
                         <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
                         <!-- TO BE CHANGED -->
@@ -128,13 +128,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="t: ${projectManager}">
-                    <td th:text="${projectManager.pmid}" />
-                    <td th:text="${projectManager.name}" />
-                    <td th:text="${projectManager.age}" />
-                    <td th:text="${projectManager.sex}" />
-                    <td th:text="${projectManager.salary}" />
-                    <td th:text="${projectManager.pid}" />
+                <tr th:each="t: ${projectManagers}">
+                    <td th:text="${projectManagers.pmid}" />
+                    <td th:text="${projectManagers.name}" />
+                    <td th:text="${projectManagers.age}" />
+                    <td th:text="${projectManagers.sex}" />
+                    <td th:text="${projectManagers.salary}" />
+                    <td th:text="${projectManagers.pid}" />
                     <td>
                         <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
                         <!-- TO BE CHANGED -->
@@ -161,12 +161,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="t: ${sofwareEngineer}">
-                    <td th:text="${sofwareEngineer.seid}" />
-                    <td th:text="${sofwareEngineer.name}" />
-                    <td th:text="${sofwareEngineer.age}" />
-                    <td th:text="${sofwareEngineer.sex}" />
-                    <td th:text="${sofwareEngineer.salary}" />
+                <tr th:each="t: ${sofwareEngineers}">
+                    <td th:text="${sofwareEngineers.seid}" />
+                    <td th:text="${sofwareEngineers.name}" />
+                    <td th:text="${sofwareEngineers.age}" />
+                    <td th:text="${sofwareEngineers.sex}" />
+                    <td th:text="${sofwareEngineers.salary}" />
                     <td>
                         <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
                         <!-- TO BE CHANGED -->
@@ -194,13 +194,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="t: ${ticket}">
-                    <td th:text="${ticket.tid}" />
-                    <td th:text="${ticket.pid}" />
-                    <td th:text="${ticket.description}" />
-                    <td th:text="${ticket.startDate}" />
-                    <td th:text="${ticket.endDate}" />
-                    <td th:text="${ticket.assignedTo}" />
+                <tr th:each="t: ${tickets}">
+                    <td th:text="${tickets.tid}" />
+                    <td th:text="${tickets.pid}" />
+                    <td th:text="${tickets.description}" />
+                    <td th:text="${tickets.startDate}" />
+                    <td th:text="${tickets.endDate}" />
+                    <td th:text="${tickets.assignedTo}" />
                     <td>
                         <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
                         <!-- TO BE CHANGED -->
