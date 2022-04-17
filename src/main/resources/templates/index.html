@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <title>To Do List</title>
+    <title>Company Management System</title>
 </head>
 
 <body>
@@ -24,13 +24,13 @@
                     <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="addSoftwareEngineer">Add Software Engineer</a>
+                    <a class="nav-link" href="addDepartment">Add Department</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="addProjectManager">Add Project Manager</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="addDepartment">Add Department</a>
+                    <a class="nav-link" href="addSoftwareEngineer">Add Software Engineer</a>
                 </li>
             </ul>
         </div>
@@ -55,9 +55,9 @@
     <!-- /Messages -->
 
     <!-- Tables -->
-    <h3>Departments</h3>
+    <div class="container p-4">
+        <label>Departments</label>
 
-    <div class="container p-5">
         <table class="table table-striped">
             <thead class="bg-primary text-white">
                 <tr>
@@ -68,53 +68,51 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="t: ${departments}">
-                    <td th:text="${departments.did}" />
-                    <td th:text="${departments.name}" />
-                    <td th:text="${departments.description" />
+                <tr th:each="d: ${departments}">
+                    <td th:text="${d.did}" />
+                    <td th:text="${d.name}" />
+                    <td th:text="${d.description}" />
                     <td>
-                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
-                        <!-- TO BE CHANGED -->
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a>
-                        <!-- TO BE CHANGED -->
+                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${d.did})}">Edit</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${d.did})}">Delete</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <h3>Projects</h3>
+    <div class="container p-4">
+        <label>Projects</label>
 
-    <div class="container p-5">
         <table class="table table-striped">
             <thead class="bg-primary text-white">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Task</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Deadline</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Department #</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="t: ${projects}">
-                    <td th:text="${projects.did}" />
-                    <td th:text="${projects.name}" />
-                    <td th:text="${projects.description" />
+                <tr th:each="p: ${projects}">
+                    <td th:text="${p.pid}" />
+                    <td th:text="${p.name}" />
+                    <td th:text="${p.description}" />
+                    <td th:text="${p.did}" />
                     <td>
-                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
-                        <!-- TO BE CHANGED -->
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a>
-                        <!-- TO BE CHANGED -->
+                        Placeholder
+                        <!-- <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a> -->
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <h3>Project Manager</h3>
+    <div class="container p-4">
+        <label>Project Managers</label>
 
-    <div class="container p-5">
         <table class="table table-striped">
             <thead class="bg-primary text-white">
                 <tr>
@@ -123,32 +121,31 @@
                     <th scope="col">Age</th>
                     <th scope="col">Sex</th>
                     <th scope="col">Salary</th>
-                    <th scope="col">Project#</th>
+                    <th scope="col">Project #</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="t: ${projectManagers}">
-                    <td th:text="${projectManagers.pmid}" />
-                    <td th:text="${projectManagers.name}" />
-                    <td th:text="${projectManagers.age}" />
-                    <td th:text="${projectManagers.sex}" />
-                    <td th:text="${projectManagers.salary}" />
-                    <td th:text="${projectManagers.pid}" />
+                <tr th:each="pm: ${projectManagers}">
+                    <td th:text="${pm.pmid}" />
+                    <td th:text="${pm.name}" />
+                    <td th:text="${pm.age}" />
+                    <td th:text="${pm.sex}" />
+                    <td th:text="${pm.salary}" />
+                    <td th:text="${pm.pid}" />
                     <td>
-                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
-                        <!-- TO BE CHANGED -->
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a>
-                        <!-- TO BE CHANGED -->
+                        Placeholder
+                        <!-- <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a> -->
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <h3>Software Engineers</h3>
+    <div class="container p-4">
+        <label>Software Engineers</label>
 
-    <div class="container p-5">
         <table class="table table-striped">
             <thead class="bg-primary text-white">
                 <tr>
@@ -161,35 +158,34 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="t: ${sofwareEngineers}">
-                    <td th:text="${sofwareEngineers.seid}" />
-                    <td th:text="${sofwareEngineers.name}" />
-                    <td th:text="${sofwareEngineers.age}" />
-                    <td th:text="${sofwareEngineers.sex}" />
-                    <td th:text="${sofwareEngineers.salary}" />
+                <tr th:each="se: ${sofwareEngineers}">
+                    <td th:text="${se.seid}" />
+                    <td th:text="${se.name}" />
+                    <td th:text="${se.age}" />
+                    <td th:text="${se.sex}" />
+                    <td th:text="${se.salary}" />
                     <td>
-                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
-                        <!-- TO BE CHANGED -->
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a>
-                        <!-- TO BE CHANGED -->
+                        Placeholder
+                        <!-- <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a> -->
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <h3>Tickets</h3>
+    <div class="container p-4">
+        <label>Tickets</label>
 
-    <div class="container p-5">
         <table class="table table-striped">
             <thead class="bg-primary text-white">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Project#</th>
+                    <th scope="col">Project #</th>
                     <th scope="col">Description</th>
                     <th scope="col">Start Date</th>
                     <th scope="col">End Date</th>
-                    <th scope="col">AssignedTo</th>
+                    <th scope="col">Assigned To</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -200,19 +196,16 @@
                     <td th:text="${tickets.description}" />
                     <td th:text="${tickets.startDate}" />
                     <td th:text="${tickets.endDate}" />
-                    <td th:text="${tickets.assignedTo}" />
+                    <td th:text="${tickets.seid}" />
                     <td>
-                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
-                        <!-- TO BE CHANGED -->
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a>
-                        <!-- TO BE CHANGED -->
+                        Placeholder
+                        <!-- <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a> -->
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-
-
     <!-- /Table -->
 
     <!-- JQuery, Popper.js, Bootstrap JS -->
