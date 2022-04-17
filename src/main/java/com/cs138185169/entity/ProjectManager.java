@@ -1,16 +1,32 @@
 package com.cs138185169.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "projectmanager")
 public class ProjectManager {
-    // pmid*, name age, sex, salary, pid#
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int pmid;
     private String name;
     private int age;
+    private float salary;
     private char sex;
-    private String pmid;
+    private int pid;
 
-    public ProjectManager(String name, int age, char sex, String pmid) {
-        this.name = name;
-        this.age = age;
-        this.sex = sex;
+    public ProjectManager() {
+        super();
+    }
+
+    public int getPmid() {
+        return this.pmid;
+    }
+
+    public void setPmid(int pmid) {
         this.pmid = pmid;
     }
 
@@ -30,6 +46,14 @@ public class ProjectManager {
         this.age = age;
     }
 
+    public float getSalary() {
+        return this.salary;
+    }
+
+    public void setSalary(float salary) {
+        this.salary = salary;
+    }
+
     public char getSex() {
         return this.sex;
     }
@@ -38,22 +62,24 @@ public class ProjectManager {
         this.sex = sex;
     }
 
-    public String getPmid() {
-        return this.pmid;
+    public int getPid() {
+        return this.pid;
     }
 
-    public void setPmid(String pmid) {
-        this.pmid = pmid;
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     @Override
     public String toString() {
         return "{" +
-            " name='" + getName() + "'" +
-            ", age='" + getAge() + "'" +
-            ", sex='" + getSex() + "'" +
-            ", pmid='" + getPmid() + "'" +
-            "}";
+                " pmid='" + getPmid() + "'" +
+                ", name='" + getName() + "'" +
+                ", age='" + getAge() + "'" +
+                ", salary='" + getSalary() + "'" +
+                ", sex='" + getSex() + "'" +
+                ", pid='" + getPid() + "'" +
+                "}";
     }
 
 }
