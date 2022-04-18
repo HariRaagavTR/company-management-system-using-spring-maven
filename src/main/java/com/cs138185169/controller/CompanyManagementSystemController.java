@@ -1,6 +1,6 @@
 package com.cs138185169.controller;
 
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -67,7 +67,13 @@ public class CompanyManagementSystemController {
     }
 
     @GetMapping("/addProject")
-    public String addProjectForm() {
+    public String addProjectForm(Model model) {
+        List<Department> departments = departmentService.getAllDepartments();
+        List<Integer> departmentIDs = new ArrayList<>();
+        for (Department dep: departments) {
+            departmentIDs.add(dep.getDid());
+        }
+        model.addAttribute("departmentIDs", departmentIDs);
         return "addProject";
     }
 
@@ -79,7 +85,14 @@ public class CompanyManagementSystemController {
     }
 
     @GetMapping("/addProjectManager")
-    public String addProjectManagerForm() {
+    public String addProjectManagerForm(Model model) {
+        List<Project> projects = projectService.getAllProjects();
+        List<Integer> projectIDs = new ArrayList<>();
+        for (Project p: projects) {
+            projectIDs.add(p.getPid());
+        }
+        model.addAttribute("projectIDs", projectIDs);
+
         return "addProjectManager";
     }
 
@@ -123,15 +136,31 @@ public class CompanyManagementSystemController {
 
     @GetMapping("/editProject/{id}")
     public String editProject(@PathVariable int id, Model model) {
+        List<Department> departments = departmentService.getAllDepartments();
+        List<Integer> departmentIDs = new ArrayList<>();
+        for (Department dep: departments) {
+            departmentIDs.add(dep.getDid());
+        }
         Project returnedProject = projectService.getProjectById(id);
+
         model.addAttribute("returnedProject", returnedProject);
+        model.addAttribute("departmentIDs", departmentIDs);
+        
         return "editProject";
     }
 
     @GetMapping("/editProjectManager/{id}")
     public String editProjectManager(@PathVariable int id, Model model) {
         ProjectManager returnedProjectManager = projectManagerService.getProjectManagerById(id);
+        List<Project> projects = projectService.getAllProjects();
+        List<Integer> projectIDs = new ArrayList<>();
+        for (Project p: projects) {
+            projectIDs.add(p.getPid());
+        }
+        
+        model.addAttribute("projectIDs", projectIDs);
         model.addAttribute("returnedProjectManager", returnedProjectManager);
+        
         return "editProjectManager";
     }
     
