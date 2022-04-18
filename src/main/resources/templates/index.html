@@ -27,6 +27,9 @@
                     <a class="nav-link" href="addDepartment">Add Department</a>
                 </li>
                 <li class="nav-item active">
+                    <a class="nav-link" href="addProject">Add Project</a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="addProjectManager">Add Project Manager</a>
                 </li>
                 <li class="nav-item active">
@@ -73,8 +76,8 @@
                     <td th:text="${d.name}" />
                     <td th:text="${d.description}" />
                     <td>
-                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${d.did})}">Edit</a>
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${d.did})}">Delete</a>
+                        <a class="btn btn-sm btn-primary" th:href="@{/editDepartment/{id}(id=${d.did})}">Edit</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/deleteDepartment/{id}(id=${d.did})}">Delete</a>
                     </td>
                 </tr>
             </tbody>
@@ -101,9 +104,8 @@
                     <td th:text="${p.description}" />
                     <td th:text="${p.did}" />
                     <td>
-                        Placeholder
-                        <!-- <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a> -->
+                        <a class="btn btn-sm btn-primary" th:href="@{/editProject/{id}(id=${p.pid})}">Edit</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/deleteProject/{id}(id=${p.pid})}">Delete</a>
                     </td>
                 </tr>
             </tbody>
@@ -128,15 +130,18 @@
             <tbody>
                 <tr th:each="pm: ${projectManagers}">
                     <td th:text="${pm.pmid}" />
-                    <td th:text="${pm.name}" />
+                    <td>
+                        <a class="btn btn-sm btn-success" th:href="@{/projectManager/{id}(id=${pm.pmid})}"
+                            th:text="${pm.name}" />
+                    </td>   
                     <td th:text="${pm.age}" />
                     <td th:text="${pm.sex}" />
                     <td th:text="${pm.salary}" />
                     <td th:text="${pm.pid}" />
                     <td>
-                        Placeholder
-                        <!-- <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a> -->
+                        <a class="btn btn-sm btn-primary" th:href="@{/editProjectManager/{id}(id=${pm.pmid})}">Edit</a>
+                        <a class="btn btn-sm btn-danger"
+                            th:href="@{/deleteProjectManager/{id}(id=${pm.pmid})}">Delete</a>
                     </td>
                 </tr>
             </tbody>
@@ -158,16 +163,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="se: ${sofwareEngineers}">
+                <tr th:each="se: ${softwareEngineers}">
                     <td th:text="${se.seid}" />
-                    <td th:text="${se.name}" />
+                    <td>
+                        <a class="btn btn-sm btn-success" th:href="@{/softwareEngineer/{id}(id=${se.seid})}"
+                            th:text="${se.name}" />
+                    </td>
                     <td th:text="${se.age}" />
                     <td th:text="${se.sex}" />
                     <td th:text="${se.salary}" />
                     <td>
-                        Placeholder
-                        <!-- <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a> -->
+                        <a class="btn btn-sm btn-primary"
+                            th:href="@{/editSoftwareEngineer/{id}(id=${se.seid})}">Edit</a>
+                        <a class="btn btn-sm btn-danger"
+                            th:href="@{/deleteSoftwareEngineer/{id}(id=${se.seid})}">Delete</a>
                     </td>
                 </tr>
             </tbody>
@@ -186,7 +195,6 @@
                     <th scope="col">Start Date</th>
                     <th scope="col">End Date</th>
                     <th scope="col">Assigned To</th>
-                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -197,11 +205,6 @@
                     <td th:text="${tickets.startDate}" />
                     <td th:text="${tickets.endDate}" />
                     <td th:text="${tickets.seid}" />
-                    <td>
-                        Placeholder
-                        <!-- <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${t.id})}">Edit</a>
-                        <a class="btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${t.id})}">Delete</a> -->
-                    </td>
                 </tr>
             </tbody>
         </table>
