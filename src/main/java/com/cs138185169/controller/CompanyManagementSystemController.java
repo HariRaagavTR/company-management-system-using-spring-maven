@@ -216,8 +216,13 @@ public class CompanyManagementSystemController {
 
     @GetMapping("/deleteDepartment/{id}")
     public String deleteDepartment(@PathVariable int id, HttpSession session) {
-        departmentService.deleteDepartment(id);
-        session.setAttribute("warningMsg", "Department Deleted Successfully!");
+        if (projectService.getAllProjectsByDid(id).size() == 0) {
+            departmentService.deleteDepartment(id);
+            session.setAttribute("warningMsg", "Department Deleted Successfully!");
+        }
+        else {
+            session.setAttribute("warningMsg", "ERROR: Dependency Found @ Project Table.");
+        }
         return "redirect:/";
     }
 

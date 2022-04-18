@@ -33,4 +33,12 @@ public class ProjectService {
     public void deleteProject(int id) {
         projectRepo.deleteById(id);
     }
+
+    public List<Project> getAllProjectsByDid(int did) {
+        Optional<List<Project>> projectsWithDid = projectRepo.findAllProjectsByDid(did);
+        if (projectsWithDid.isPresent()) {
+            return projectsWithDid.get();
+        }
+        return null;
+    }
 }
