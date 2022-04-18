@@ -181,21 +181,21 @@ public class CompanyManagementSystemController {
     @PostMapping("/updateDepartment")
     public String updateDepartment(@ModelAttribute Department updatedDepartment, HttpSession session) {
         departmentService.addDepartment(updatedDepartment);
-        session.setAttribute("warningMsg", "Department Updated Successfully!");
+        session.setAttribute("successMsg", "Department Updated Successfully!");
         return "redirect:/";
     }
 
     @PostMapping("/updateProject")
     public String updateProject(@ModelAttribute Project updatedProject, HttpSession session) {
         projectService.addProject(updatedProject);
-        session.setAttribute("warningMsg", "Project Updated Successfully!");
+        session.setAttribute("successMsg", "Project Updated Successfully!");
         return "redirect:/";
     }
 
     @PostMapping("/updateProjectManager")
     public String updateProjectManager(@ModelAttribute ProjectManager updatedProjectManager, HttpSession session) {
         projectManagerService.addProjectManager(updatedProjectManager);
-        session.setAttribute("warningMsg", "Project Manager Updated Successfully!");
+        session.setAttribute("successMsg", "Project Manager Updated Successfully!");
         return "redirect:/";
     }
 
@@ -203,7 +203,7 @@ public class CompanyManagementSystemController {
     public String updateSoftwareEngineer(@ModelAttribute SoftwareEngineer updatedSoftwareEngineer,
             HttpSession session) {
         softwareEngineerService.addSoftwareEngineer(updatedSoftwareEngineer);
-        session.setAttribute("warningMsg", "Software Engineer Updated Successfully!");
+        session.setAttribute("successMsg", "Software Engineer Updated Successfully!");
         return "redirect:/";
     }
 
@@ -211,7 +211,7 @@ public class CompanyManagementSystemController {
     public String updateTicket(@ModelAttribute Ticket updatedTicket,
             HttpSession session) {
         ticketService.addTicket(updatedTicket);
-        session.setAttribute("warningMsg", "Ticket Updated Successfully!");
+        session.setAttribute("successMsg", "Ticket Updated Successfully!");
         return "redirect:/";
     }
 
@@ -221,7 +221,7 @@ public class CompanyManagementSystemController {
             departmentService.deleteDepartment(id);
             session.setAttribute("warningMsg", "Department Deleted Successfully!");
         } else {
-            session.setAttribute("warningMsg", "ERROR: Dependency Found @ Project Table.");
+            session.setAttribute("errorMsg", "ERROR: Dependency Found @ Project Table.");
         }
         return "redirect:/";
     }
@@ -233,7 +233,7 @@ public class CompanyManagementSystemController {
             projectService.deleteProject(id);
             session.setAttribute("warningMsg", "Project Deleted Successfully!");
         } else {
-            session.setAttribute("warningMsg", "ERROR: Dependency Found @ Project Manager / Ticket Table.");
+            session.setAttribute("errorMsg", "ERROR: Dependency Found @ Project Manager / Ticket Table.");
         }
         return "redirect:/";
     }
@@ -241,7 +241,7 @@ public class CompanyManagementSystemController {
     @GetMapping("/deleteProjectManager/{id}")
     public String deleteProjectManager(@PathVariable int id, HttpSession session) {
         projectManagerService.deleteProjectManager(id);
-        session.setAttribute("warningMsg", "ProjectManager Deleted Successfully!");
+        session.setAttribute("successMsg", "ProjectManager Deleted Successfully!");
         return "redirect:/";
     }
 
@@ -251,7 +251,7 @@ public class CompanyManagementSystemController {
             softwareEngineerService.deleteSoftwareEngineer(id);
             session.setAttribute("warningMsg", "Software Engineer Deleted Successfully!");
         } else {
-            session.setAttribute("warningMsg", "ERROR: Dependency Found @ Ticket Table.");
+            session.setAttribute("errorMsg", "ERROR: Dependency Found @ Ticket Table.");
         }
         return "redirect:/";
     }
@@ -259,7 +259,7 @@ public class CompanyManagementSystemController {
     @GetMapping("/deleteTicket/{id}")
     public String deleteTicket(@PathVariable int id, HttpSession session) {
         ticketService.deleteTicket(id);
-        session.setAttribute("warningMsg", "Ticket Deleted Successfully!");
+        session.setAttribute("successMsg", "Ticket Deleted Successfully!");
         return "redirect:/";
     }
 }
