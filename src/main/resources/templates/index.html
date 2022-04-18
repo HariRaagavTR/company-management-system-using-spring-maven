@@ -199,12 +199,12 @@
             </thead>
             <tbody>
                 <tr th:each="t: ${tickets}">
-                    <td th:text="${tickets.tid}" />
-                    <td th:text="${tickets.pid}" />
-                    <td th:text="${tickets.description}" />
-                    <td th:text="${tickets.startDate}" />
-                    <td th:text="${tickets.endDate}" />
-                    <td th:text="${tickets.seid}" />
+                    <td th:text="${t.tid}" />
+                    <td th:text="${t.pid}" />
+                    <td th:text="${t.description}" />
+                    <td th:text="${t.startDate}" />
+                    <td th:text="${t.endDate}" />
+                    <td th:text="${t.seid}" />
                 </tr>
             </tbody>
         </table>
