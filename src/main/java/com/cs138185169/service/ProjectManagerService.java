@@ -33,4 +33,12 @@ public class ProjectManagerService {
     public void deleteProjectManager(int id) {
         projectManagerRepo.deleteById(id);
     }
+
+    public List<ProjectManager> getAllProjectManagersByPid(int pid) {
+        Optional<List<ProjectManager>> returnedProjectManagers = projectManagerRepo.getAllProjectManagersByPid(pid);
+        if (returnedProjectManagers.isPresent()) {
+            return returnedProjectManagers.get();
+        }
+        return null;
+    }
 }

@@ -44,7 +44,7 @@ public class CompanyManagementSystemController {
         List<ProjectManager> projectManagers = projectManagerService.getAllProjectManagers();
         List<SoftwareEngineer> softwareEngineers = softwareEngineerService.getAllSoftwareEngineers();
         List<Ticket> tickets = ticketService.getAllTickets();
-        
+
         model.addAttribute("departments", departments);
         model.addAttribute("projects", projects);
         model.addAttribute("projectManagers", projectManagers);
@@ -70,7 +70,7 @@ public class CompanyManagementSystemController {
     public String addProjectForm(Model model) {
         List<Department> departments = departmentService.getAllDepartments();
         List<Integer> departmentIDs = new ArrayList<>();
-        for (Department dep: departments) {
+        for (Department dep : departments) {
             departmentIDs.add(dep.getDid());
         }
         model.addAttribute("departmentIDs", departmentIDs);
@@ -88,7 +88,7 @@ public class CompanyManagementSystemController {
     public String addProjectManagerForm(Model model) {
         List<Project> projects = projectService.getAllProjects();
         List<Integer> projectIDs = new ArrayList<>();
-        for (Project p: projects) {
+        for (Project p : projects) {
             projectIDs.add(p.getPid());
         }
         model.addAttribute("projectIDs", projectIDs);
@@ -138,14 +138,14 @@ public class CompanyManagementSystemController {
     public String editProject(@PathVariable int id, Model model) {
         List<Department> departments = departmentService.getAllDepartments();
         List<Integer> departmentIDs = new ArrayList<>();
-        for (Department dep: departments) {
+        for (Department dep : departments) {
             departmentIDs.add(dep.getDid());
         }
         Project returnedProject = projectService.getProjectById(id);
 
         model.addAttribute("returnedProject", returnedProject);
         model.addAttribute("departmentIDs", departmentIDs);
-        
+
         return "editProject";
     }
 
@@ -154,16 +154,16 @@ public class CompanyManagementSystemController {
         ProjectManager returnedProjectManager = projectManagerService.getProjectManagerById(id);
         List<Project> projects = projectService.getAllProjects();
         List<Integer> projectIDs = new ArrayList<>();
-        for (Project p: projects) {
+        for (Project p : projects) {
             projectIDs.add(p.getPid());
         }
-        
+
         model.addAttribute("projectIDs", projectIDs);
         model.addAttribute("returnedProjectManager", returnedProjectManager);
-        
+
         return "editProjectManager";
     }
-    
+
     @GetMapping("/editSoftwareEngineer/{id}")
     public String editSoftwareEngineer(@PathVariable int id, Model model) {
         SoftwareEngineer returnedSoftwareEngineer = softwareEngineerService.getSoftwareEngineerById(id);
@@ -177,7 +177,7 @@ public class CompanyManagementSystemController {
         model.addAttribute("returnedTicket", returnedTicket);
         return "editTicket";
     }
-    
+
     @PostMapping("/updateDepartment")
     public String updateDepartment(@ModelAttribute Department updatedDepartment, HttpSession session) {
         departmentService.addDepartment(updatedDepartment);
@@ -200,7 +200,8 @@ public class CompanyManagementSystemController {
     }
 
     @PostMapping("/updateSoftwareEngineer")
-    public String updateSoftwareEngineer(@ModelAttribute SoftwareEngineer updatedSoftwareEngineer, HttpSession session) {
+    public String updateSoftwareEngineer(@ModelAttribute SoftwareEngineer updatedSoftwareEngineer,
+            HttpSession session) {
         softwareEngineerService.addSoftwareEngineer(updatedSoftwareEngineer);
         session.setAttribute("warningMsg", "Software Engineer Updated Successfully!");
         return "redirect:/";
@@ -219,8 +220,7 @@ public class CompanyManagementSystemController {
         if (projectService.getAllProjectsByDid(id).size() == 0) {
             departmentService.deleteDepartment(id);
             session.setAttribute("warningMsg", "Department Deleted Successfully!");
-        }
-        else {
+        } else {
             session.setAttribute("warningMsg", "ERROR: Dependency Found @ Project Table.");
         }
         return "redirect:/";
@@ -228,8 +228,13 @@ public class CompanyManagementSystemController {
 
     @GetMapping("/deleteProject/{id}")
     public String deleteProject(@PathVariable int id, HttpSession session) {
-        projectService.deleteProject(id);
-        session.setAttribute("warningMsg", "Project Deleted Successfully!");
+        if (projectManagerService.getAllProjectManagersByPid(id).size() == 0 &&
+                ticketService.getTicketByPid(id).size() == 0) {
+            projectService.deleteProject(id);
+            session.setAttribute("warningMsg", "Project Deleted Successfully!");
+        } else {
+            session.setAttribute("warningMsg", "ERROR: Dependency Found @ Project Manager / Ticket Table.");
+        }
         return "redirect:/";
     }
 

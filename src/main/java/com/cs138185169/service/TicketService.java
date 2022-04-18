@@ -33,4 +33,12 @@ public class TicketService {
     public void deleteTicket(int id) {
         ticketRepo.deleteById(id);
     }
+
+    public List<Ticket> getTicketByPid(int pid) {
+        Optional<List<Ticket>> returnedTickets = ticketRepo.getAllTicketsByPid(pid);
+        if (returnedTickets.isPresent()) {
+            return returnedTickets.get();
+        }
+        return null;
+    }
 }
