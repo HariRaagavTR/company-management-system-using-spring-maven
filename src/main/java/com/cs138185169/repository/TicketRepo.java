@@ -12,4 +12,7 @@ import com.cs138185169.entity.Ticket;
 public interface TicketRepo extends JpaRepository<Ticket, Integer> {
     @Query("SELECT t from Ticket t WHERE t.pid = ?1")
     Optional<List<Ticket>> getAllTicketsByPid(int pid);
+
+    @Query("SELECT t from Ticket t WHERE t.seid = ?1")
+    Optional<List<Ticket>> getAllTicketsBySeid(int seid);
 }

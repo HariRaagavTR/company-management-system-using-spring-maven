@@ -41,4 +41,12 @@ public class TicketService {
         }
         return null;
     }
+
+    public List<Ticket> getTicketBySeid(int seid) {
+        Optional<List<Ticket>> returnedTickets = ticketRepo.getAllTicketsBySeid(seid);
+        if (returnedTickets.isPresent()) {
+            return returnedTickets.get();
+        }
+        return null;
+    }
 }

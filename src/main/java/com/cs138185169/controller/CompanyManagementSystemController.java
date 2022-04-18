@@ -247,8 +247,12 @@ public class CompanyManagementSystemController {
 
     @GetMapping("/deleteSoftwareEngineer/{id}")
     public String deleteSoftwareEngineer(@PathVariable int id, HttpSession session) {
-        softwareEngineerService.deleteSoftwareEngineer(id);
-        session.setAttribute("warningMsg", "Software Engineer Deleted Successfully!");
+        if (ticketService.getTicketBySeid(id).size() == 0) {
+            softwareEngineerService.deleteSoftwareEngineer(id);
+            session.setAttribute("warningMsg", "Software Engineer Deleted Successfully!");
+        } else {
+            session.setAttribute("warningMsg", "ERROR: Dependency Found @ Ticket Table.");
+        }
         return "redirect:/";
     }
 
