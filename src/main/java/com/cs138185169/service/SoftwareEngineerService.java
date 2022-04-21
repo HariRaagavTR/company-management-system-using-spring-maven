@@ -22,6 +22,14 @@ public class SoftwareEngineerService {
         return softwareEngineerRepo.findAll();
     }
 
+    public List<Integer> getAllSeid() {
+        Optional<List<Integer>> allSeids = softwareEngineerRepo.getAllSeid();
+        if (allSeids.isPresent()) {
+            return allSeids.get();
+        }
+        return null;
+    }
+
     public SoftwareEngineer getSoftwareEngineerById(int id) {
         Optional<SoftwareEngineer> returnedSoftwareEngineer = softwareEngineerRepo.findById(id);
         if (returnedSoftwareEngineer.isPresent()) {

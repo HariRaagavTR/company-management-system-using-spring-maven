@@ -67,14 +67,20 @@ public class CompanyManagementSystemController {
     }
 
     @GetMapping("/addProject")
-    public String addProjectForm(Model model) {
+    public String addProjectForm(Model model, HttpSession session) {
         List<Department> departments = departmentService.getAllDepartments();
         List<Integer> departmentIDs = new ArrayList<>();
         for (Department dep : departments) {
             departmentIDs.add(dep.getDid());
         }
-        model.addAttribute("departmentIDs", departmentIDs);
-        return "addProject";
+
+        if (departmentIDs.size() > 0) {
+            model.addAttribute("departmentIDs", departmentIDs);
+            return "addProject";
+        } else {
+            session.setAttribute("errorMsg", "ERROR: No Departments Found!");
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/addProject")
@@ -85,15 +91,20 @@ public class CompanyManagementSystemController {
     }
 
     @GetMapping("/addProjectManager")
-    public String addProjectManagerForm(Model model) {
+    public String addProjectManagerForm(Model model, HttpSession session) {
         List<Project> projects = projectService.getAllProjects();
         List<Integer> projectIDs = new ArrayList<>();
         for (Project p : projects) {
             projectIDs.add(p.getPid());
         }
-        model.addAttribute("projectIDs", projectIDs);
 
-        return "addProjectManager";
+        if (projectIDs.size() > 0) {
+            model.addAttribute("projectIDs", projectIDs);
+            return "addProjectManager";
+        } else {
+            session.setAttribute("errorMsg", "ERROR: No Projects Found!");
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/addProjectManager")
@@ -115,16 +126,21 @@ public class CompanyManagementSystemController {
         return "redirect:/";
     }
 
-    @GetMapping("/addTicket")
-    public String addTicketForm() {
+    @GetMapping("/addTicket/{pid}/{pmid}")
+    public String addTicketForm(@PathVariable int pid, @PathVariable int pmid, Model model) {
+        List<Integer> listOfSeid = softwareEngineerService.getAllSeid();
+        int seid = listOfSeid.get((new Random()).nextInt(listOfSeid.size()));
+        model.addAttribute("pid", pid);
+        model.addAttribute("pmid", pmid);
+        model.addAttribute("seid", seid);
         return "addTicket";
     }
 
-    @PostMapping("/addTicket")
-    public String addNewTicket(@ModelAttribute Ticket newTicket, HttpSession session) {
+    @PostMapping("/addTicket/{pmid}")
+    public String addNewTicket(@PathVariable int pmid, @ModelAttribute Ticket newTicket, HttpSession session) {
         ticketService.addTicket(newTicket);
         session.setAttribute("successMsg", "Ticket Added Successfully!");
-        return "redirect:/";
+        return "redirect:/projectManager/" + Integer.toString(pmid);
     }
 
     @GetMapping("/editDepartment/{id}")
@@ -171,18 +187,20 @@ public class CompanyManagementSystemController {
         return "editSoftwareEngineer";
     }
 
-    @GetMapping("/editTicket/{id}")
-    public String editTicket(@PathVariable int id, Model model) {
+    @GetMapping("/editTicket/{id}/{pmid}")
+    public String editTicket(@PathVariable int id, @PathVariable int pmid, Model model) {
         Ticket returnedTicket = ticketService.getTicketById(id);
         model.addAttribute("returnedTicket", returnedTicket);
+        model.addAttribute("pmid", pmid);
         return "editTicket";
     }
 
-    @PostMapping("/updateDepartment")
-    public String updateDepartment(@ModelAttribute Department updatedDepartment, HttpSession session) {
+    @PostMapping("/updateDepartment/{pmid}")
+    public String updateDepartment(@PathVariable int pmid, @ModelAttribute Department updatedDepartment,
+            HttpSession session) {
         departmentService.addDepartment(updatedDepartment);
         session.setAttribute("successMsg", "Department Updated Successfully!");
-        return "redirect:/";
+        return "redirect:/projectManager/" + Integer.toString(pmid);
     }
 
     @PostMapping("/updateProject")
@@ -207,12 +225,12 @@ public class CompanyManagementSystemController {
         return "redirect:/";
     }
 
-    @PostMapping("/updateTicket")
-    public String updateTicket(@ModelAttribute Ticket updatedTicket,
+    @PostMapping("/updateTicket/{pmid}")
+    public String updateTicket(@PathVariable int pmid, @ModelAttribute Ticket updatedTicket,
             HttpSession session) {
         ticketService.addTicket(updatedTicket);
         session.setAttribute("successMsg", "Ticket Updated Successfully!");
-        return "redirect:/";
+        return "redirect:/projectManager/" + Integer.toString(pmid);
     }
 
     @GetMapping("/deleteDepartment/{id}")
@@ -256,10 +274,57 @@ public class CompanyManagementSystemController {
         return "redirect:/";
     }
 
-    @GetMapping("/deleteTicket/{id}")
-    public String deleteTicket(@PathVariable int id, HttpSession session) {
+    @GetMapping("/completeTicket/{id}/{seid}")
+    public String completeTicket(@PathVariable int id, @PathVariable int seid, HttpSession session) {
+        ticketService.deleteTicket(id);
+        session.setAttribute("successMsg", "Ticket Completed!");
+        return "redirect:/softwareEngineer/" + Integer.toString(seid);
+    }
+
+    @GetMapping("/deleteTicket/{id}/{pmid}")
+    public String deleteTicket(@PathVariable int id, @PathVariable int pmid, HttpSession session) {
         ticketService.deleteTicket(id);
         session.setAttribute("successMsg", "Ticket Deleted Successfully!");
-        return "redirect:/";
+        return "redirect:/projectManager/" + Integer.toString(pmid);
+    }
+
+    @GetMapping("/reassignTicket/{id}/{seid}")
+    public String reassignTicket(@PathVariable int id, @PathVariable int seid, HttpSession session) {
+        List<Integer> listOfSeid = softwareEngineerService.getAllSeid();
+        Random rand = new Random();
+
+        if (listOfSeid.size() > 1) {
+            int updatedSeid = listOfSeid.get(rand.nextInt(listOfSeid.size()));
+            while (updatedSeid == seid) {
+                updatedSeid = listOfSeid.get(rand.nextInt(listOfSeid.size()));
+            }
+            ticketService.updateTicketSeidByTid(id, updatedSeid);
+            session.setAttribute("successMsg", "Ticket Passed Successfully to " + updatedSeid + "!");
+        } else
+            session.setAttribute("errorMsg", "ERROR: Not enough software engineers to reassign!");
+
+        return "redirect:/softwareEngineer/" + Integer.toString(seid);
+    }
+
+    @GetMapping("/softwareEngineer/{id}")
+    public String softwareEngineerPage(@PathVariable int id, HttpSession session, Model model) {
+        SoftwareEngineer softwareEngineerDetails = softwareEngineerService.getSoftwareEngineerById(id);
+        if (softwareEngineerDetails == null)
+            return "redirect:/";
+        List<Ticket> ticketsAssignedToSoftwareEngineer = ticketService.getTicketBySeid(id);
+        model.addAttribute("softwareEngineerDetails", softwareEngineerDetails);
+        model.addAttribute("ticketsAssignedToSoftwareEngineer", ticketsAssignedToSoftwareEngineer);
+        return "softwareEngineer";
+    }
+
+    @GetMapping("/projectManager/{id}")
+    public String projectManagerPage(@PathVariable int id, HttpSession session, Model model) {
+        ProjectManager projectManagerDetails = projectManagerService.getProjectManagerById(id);
+        if (projectManagerDetails == null)
+            return "redirect:/";
+        List<Ticket> ticketsUnderThatProject = ticketService.getTicketByPid(projectManagerDetails.getPid());
+        model.addAttribute("projectManagerDetails", projectManagerDetails);
+        model.addAttribute("ticketsUnderThatProject", ticketsUnderThatProject);
+        return "projectManager";
     }
 }

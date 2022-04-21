@@ -49,4 +49,8 @@ public class TicketService {
         }
         return null;
     }
+
+    public void updateTicketSeidByTid(int tid, int seid) {
+        ticketRepo.updateTicketSeidByTid(tid, seid);
+    }
 }

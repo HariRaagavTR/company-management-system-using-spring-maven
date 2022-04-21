@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>Company Management System</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand">Company Management System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link"
+                        th:href="${'/addTicket/' + {projectManagerDetails.pid} + '/' + {projectManagerDetails.pmid}}">
+                        Create Ticket
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+    <!-- /Navbar -->
+
+    <!-- Messages -->
+    <div th:if=${session.successMsg}>
+        <div class="alert alert-success" role="alert" th:text="${session.successMsg}" />
+        <th:block th:text="${#session.removeAttribute('successMsg')}" />
+    </div>
+
+    <div th:if=${session.errorMsg}>
+        <div class="alert alert-danger" role="alert" th:text="${session.errorMsg}" />
+        <th:block th:text="${#session.removeAttribute('errorMsg')}" />
+    </div>
+
+    <div th:if=${session.warningMsg}>
+        <div class="alert alert-warning" role="alert" th:text="${session.warningMsg}" />
+        <th:block th:text="${#session.removeAttribute('warningMsg')}" />
+    </div>
+    <!-- /Messages -->
+
+    <!-- Tables -->
+    <div class="container p-4">
+        <label>Details of Project Manager</label>
+
+        <table class="table table-striped">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Sex</th>
+                    <th scope="col">Salary</th>
+                    <th scope="col">Project #</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${projectManagerDetails.pmid}" />
+                    <td th:text="${projectManagerDetails.name}" />
+                    <td th:text="${projectManagerDetails.age}" />
+                    <td th:text="${projectManagerDetails.sex}" />
+                    <td th:text="${projectManagerDetails.salary}" />
+                    <td th:text="${projectManagerDetails.pid}" />
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container p-4">
+        <label>Tickets</label>
+
+        <table class="table table-striped">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Project #</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Assigned To</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="t: ${ticketsUnderThatProject}">
+                    <td th:text="${t.tid}" />
+                    <td th:text="${t.pid}" />
+                    <td th:text="${t.description}" />
+                    <td th:text="${t.startDate}" />
+                    <td th:text="${t.endDate}" />
+                    <td th:text="${t.seid}" />
+                    <td>
+                        <a class="btn btn-sm btn-primary"
+                            th:href="${'/editTicket/' + {t.tid} + '/' + {projectManagerDetails.pmid}}">Edit</a>
+                        <a class="btn btn-sm btn-danger"
+                            th:href="${'/deleteTicket/' + {t.tid} + '/' + {projectManagerDetails.pmid}}">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- /Tables -->
+
+    <!-- JQuery, Popper.js, Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+        integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous" />
+</body>
+
+</html>
