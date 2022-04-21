@@ -49,7 +49,7 @@
                         <h4 class="text-center text-primary">Edit Project Manager</h4>
 
                         <form th:action="@{/updateProjectManager}" method="post" th:object="${returnedProjectManager}">
-                            <input type="hidden" th:value="${returnedProjectManager.pmid}" name="seid" />
+                            <input type="hidden" th:value="${returnedProjectManager.pmid}" name="pmid" />
 
                             <div class="form-group">
                                 <label>Name</label> <input type="text" class="form-control" name="name"
