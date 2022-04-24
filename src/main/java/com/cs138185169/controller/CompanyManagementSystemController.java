@@ -195,12 +195,12 @@ public class CompanyManagementSystemController {
         return "editTicket";
     }
 
-    @PostMapping("/updateDepartment/{pmid}")
-    public String updateDepartment(@PathVariable int pmid, @ModelAttribute Department updatedDepartment,
+    @PostMapping("/updateDepartment")
+    public String updateDepartment(@ModelAttribute Department updatedDepartment,
             HttpSession session) {
         departmentService.addDepartment(updatedDepartment);
         session.setAttribute("successMsg", "Department Updated Successfully!");
-        return "redirect:/projectManager/" + Integer.toString(pmid);
+        return "redirect:/";
     }
 
     @PostMapping("/updateProject")
